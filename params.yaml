@@ -3,13 +3,13 @@ path:
   path: 'params.yaml'
 
 simulation:
-  tot_sims: 1
-  n_clients: 35
-  n_rounds: 250
+  tot_sims: 1      # n' of simulations
+  n_clients: 35    #number of clients
+  n_rounds: 250     # 
 
 # Parameters for the neural networks
 model :
-  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > Sentiment dataset , CNN,VGG ---> EMNSIT or CIFAR10 datasets
+  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
   epochs: 1
   batch_size: 32
 
@@ -19,14 +19,13 @@ model :
 
 # Parameters for the dataset
 data:
-  Algorithm: ['pFedME'] # [Fedprox,Scaffold,Ditto,VAN,LOC,pFedME,PER]
+  Algorithm: ['PER'] # [Fedprox,Scaffold,Ditto,VAN,LOC,pFedME,PER] (VAN = Federated Averaging, LOC = Local training, PER = our algorithm)
   dataset: 'Sentiment' # [Sentiment, EMNIST,CIFAR10]
-  distribution : "dirichlet" # "label swap","rotation"     ##########################
-  alpha : 0.4 # None
+  alpha : None
 
   PER:
-    cluster_mode : "off" # "on", "off"  ##################  Relevant only for Algorithm : PER ######################
-    divisor : 10 # 10 ( should be > 1)
+    cluster_mode : "off" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
+    divisor : 10 # 10 ( should be > 1) Defines the amount of data used by each device to calculate the variance to calculate the aggregation weights, equal to data_available/divisor
     cluster_size : 4
 
   Ditto:
