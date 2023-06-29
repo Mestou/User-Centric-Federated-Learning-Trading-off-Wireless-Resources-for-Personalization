@@ -1,5 +1,5 @@
 """
-    Utility script to read parameters and data from files.
+    Script to read parameters and data from files.
 """
 
 import yaml
