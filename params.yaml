@@ -15,7 +15,7 @@ model :
 
   optimizer:
     type: 'SGD' # 'Adam','SGD'
-    local_lr: 0.01
+    local_lr: 0.01 # Learning rate
 
 # Parameters for the dataset and Algorithms
 data:
