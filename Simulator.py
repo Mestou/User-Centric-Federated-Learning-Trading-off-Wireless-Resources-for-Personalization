@@ -104,6 +104,7 @@ class simulator:
 
                 elif (Training_Modes == 'LOC'):
                     Local_training(it=it, node_list=node_list)
+                    
                 else:
                     FedAvg_training( it= it  , node_list=node_list, samples_user = self.samples_user)
 
