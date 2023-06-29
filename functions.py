@@ -72,26 +72,12 @@ def user_weighting(delta,nodes,fracs,samples_user,var,collab = 'VAN',cluster_mod
             if max_silhouette < silhouette_avg:
                 max_silhouette = silhouette_avg
                 n = n_cluster
-            #y_lower = 10
-            # for i in range(n_cluster):
-            #     ith_cluster_silhouette_values = \
-            #         sample_silhouette_values[cluster_labels == i]
-            #     ith_cluster_silhouette_values.sort()
-            #     size_cluster_i = ith_cluster_silhouette_values.shape[0]
-            #     y_upper = y_lower + size_cluster_i
-            #     color = cm.nipy_spectral(float(i) / n_cluster)
-            #     plt.fill_between(np.arange(y_lower, y_upper),0, ith_cluster_silhouette_values,facecolor=color, edgecolor=color, alpha=0.7)
-            #     plt.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
-            #     y_lower = y_upper + 10  # 10 for the 0 samples
-            # plt.title("The silhouette plot for the various clusters.")
-            # plt.xlabel("The silhouette coefficient values")
-            # plt.ylabel("Cluster label")
         clusters = KMeans(n_clusters=n, random_state=1).fit(W)
         print(" ")
         print("######### Best clustering configuration, K = ",n, "Silhouette score = ", max_silhouette, " ##########")
         for i in range(0, nodes):
             W[i, :] = clusters.cluster_centers_[clusters.labels_[i]]
-        print(W[0])
+        
     return W
 
 def Ditto_training(mu = 0.5, node_list = [], it = 0, samples_user = []):
@@ -238,7 +224,6 @@ def FedAvg_training( it=-1 , node_list=[], samples_user= []):
                  range(0, len(weights))]  # Averaging local weights
         node.set_model_params(avg_w)  # Setting the local params
 
-        # node.model.trainable_variables[-2].assign(embeddings[node_ind])
         node_ind = node_ind + 1
     return node_list
 
