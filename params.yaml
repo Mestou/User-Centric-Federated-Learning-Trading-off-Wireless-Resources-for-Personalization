@@ -17,7 +17,7 @@ model :
     type: 'SGD' # 'Adam','SGD'
     local_lr: 0.01
 
-# Parameters for the dataset
+# Parameters for the dataset and Algorithms
 data:
   Algorithm: ['PER'] # [Fedprox,Scaffold,Ditto,VAN,LOC,pFedME,PER] (VAN = Federated Averaging, LOC = Local training, PER = our algorithm)
   dataset: 'Sentiment' # [Sentiment, EMNIST,CIFAR10]
