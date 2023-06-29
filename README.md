@@ -1,8 +1,7 @@
 # User_centric_Federated_Learning: Trading off Wireless Resources for Personalization
-Tensorflow implementation for the paper titled "User-Centric Federated Learning: Trading off Wireless Resources for Personalization"
+Tensorflow implementation of the algorithm "PER" implemented in the paper titled "User-Centric Federated Learning: Trading off Wireless Resources for Personalization"
 
 ["User-Centric Federated Learning: Trading off Wireless Resources for Personalization"]([https://arxiv.org/pdf/2209.15328.pdf](https://arxiv.org/abs/2304.12930)) <br/>
-
 
 ## Environment setup:
 Packages can be found in `requirements.txt`.
@@ -10,7 +9,7 @@ Packages can be found in `requirements.txt`.
 ## Training:
 Set the `params_path` in `main.py` to the the path of the `{}.yaml` file with the desired algorithm, model, and datasets. The default parameters can be found in the provided `{}.yaml` files. To train the model, simply run:
 
-The list of the available Algorithms with their parameters, and the available models are included (commented) in the params.yml
+The list of the available Algorithms [PER,Fedprox,Scaffold,Ditto,VAN,LOC,pFedME] with their parameters, and the available models [CNN,VGG,Sentiment] are included (commented) in the params.yml
 
 ```
 python3 main.py
