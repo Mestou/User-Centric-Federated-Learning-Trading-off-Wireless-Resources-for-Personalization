@@ -90,18 +90,17 @@ class simulator:
                     if it==0:
                        divisor = self.params.get("data").get("PER").get("divisor")
                        cluster_mode = self.params.get("data").get("PER").get("cluster_mode")
-                       cluster_size = self.params.get("data").get("PER").get("cluster_size")
 
                        if cluster_mode == "on":
                            print('Clustering mode is ON')
 
                        W = FedPer_training( W = [], it=it, node_list=node_list, init=dummy_node.get_model_params(),
                                         divisor=divisor, fracs=self.fracs,
-                                        samples_user=self.samples_user, cluster_mode=cluster_mode, n_cluster=cluster_size)
+                                        samples_user=self.samples_user, cluster_mode=cluster_mode, n_cluster=None)
                     else:
 
                        _ = FedPer_training( W=W, it=it, node_list=node_list, init=dummy_node.get_model_params(), divisor=divisor, fracs=self.fracs,
-                                    samples_user=self.samples_user, cluster_mode=cluster_mode, n_cluster=cluster_size)
+                                    samples_user=self.samples_user, cluster_mode=cluster_mode, n_cluster=None)
 
                 elif (Training_Modes == 'LOC'):
                     Local_training(it=it, node_list=node_list)
