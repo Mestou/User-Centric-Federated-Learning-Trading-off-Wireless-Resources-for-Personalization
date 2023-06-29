@@ -7,9 +7,10 @@ Tensorflow implementation of the algorithm "PER" implemented in the paper titled
 Packages can be found in `requirements.txt`.
 
 ## Training:
-Set the `params_path` in `main.py` to the the path of the `{}.yaml` file with the desired algorithm, model, and datasets. The default parameters can be found in the provided `{}.yaml` files. To train the model, simply run:
 
-The list of the available Algorithms [PER,Fedprox,Scaffold,Ditto,VAN,LOC,pFedME] with their parameters, and the available models [CNN,VGG,Sentiment] are included (commented) in the params.yml
+The list of the available Algorithms [PER,Fedprox,Scaffold,Ditto,VAN,LOC,pFedME] with their parameters, and the available models [CNN,VGG,Sentiment] are included (commented) in the params.yml file.
+
+Set the desired algorithm, model, and dataset in the `params.yaml` file. Then, to train the model, simply run:
 
 ```
 python3 main.py
