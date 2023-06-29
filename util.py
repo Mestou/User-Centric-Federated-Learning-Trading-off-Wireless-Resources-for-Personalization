@@ -290,72 +290,12 @@ def loadSentiment(nodes):
         for j in range(0, nodes):
             fracs[i, j] = samples_user[j] / samples_user[i]
 
-    # samples_user = np.random.randint(99, 100, size=nodes)
-    # samples_user = np.ceil(8000 * samples_user / np.sum(samples_user)).astype(int)
-    # class_user = np.arange(0, num_classes)
-    # ind_class = [np.where(y_train == i) for i in range(0, 4)]
-    # train_X, train_Y, test_X, test_Y = [], [], [], []
-    # assigned, client_idcs, val_idcs = [], [], []  # Used to track assigned samples and avoid overlapping datasets
-    #
-    #
-    #
-    #
-    # for i in range(0, nodes):
-    #     ind_class_user = np.concatenate([ind_class[i][0] for i in class_user], axis=0)
-    #     ind_class_user = np.setdiff1d(ind_class_user, np.array(assigned), assume_unique=True)
-    #     indices = np.random.choice(ind_class_user, size=samples_user[i], replace=False)
-    #     assigned.append(indices)
-    #     client_idcs.append(indices)
-    #     val_idcs.append(np.arange(0, 1000))
-    # for i in range(0, nodes):
-    #     train_X.append(x_train[client_idcs[i]])
-    #     train_Y.append(y_train[client_idcs[i]])
-    #     test_X.append(x_test[val_idcs[i]])
-    #     test_Y.append(y_test[val_idcs[i]])
-    #
-    # fracs = np.zeros((nodes,nodes),dtype= float)
-    # for i in range(0,nodes):
-    #     for j in range(0,nodes):
-    #         fracs[i,j] = samples_user[j]/samples_user[i]
-    # print("Nodes dataset sizes : ")
-    # print(samples_user)
-    # x_shape = x_train[0].shape
-    #                              #### comment/uncomment for label swap experiment ####
-    # print("Label swap vectors")
-    # p = np.random.permutation(num_classes)
-    # print(p)
-    # for i in range(0,5):
-    #     train_Y[i]=label_swap(train_Y[i],p)
-    #     test_Y[i]=label_swap(test_Y[i],p)
-    # p = np.random.permutation(num_classes)
-    # print(p)
-    # for i in range(5, 10):
-    #     train_Y[i]=label_swap(train_Y[i],p)
-    #     test_Y[i]=label_swap(test_Y[i],p)
-
 
                                          ##########################################
 
     train_Y = [tf.one_hot(train_Y[i], depth=num_classes).numpy() for i in range(0, nodes)]
     test_Y = [tf.one_hot(test_Y[i], depth=num_classes).numpy() for i in range(0, nodes)]
     return (train_X, train_Y), (test_X, test_Y), x_shape, num_classes, fracs, samples_user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def custom_standardization(input_data):
