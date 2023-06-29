@@ -1,0 +1,45 @@
+# Simulation paramters
+path:
+  path: 'params.yaml'
+
+simulation:
+  tot_sims: 1
+  n_clients: 35
+  n_rounds: 250
+
+# Parameters for the neural networks
+model :
+  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > Sentiment dataset , CNN,VGG ---> EMNSIT or CIFAR10 datasets
+  epochs: 1
+  batch_size: 32
+
+  optimizer:
+    type: 'SGD' # 'Adam','SGD'
+    local_lr: 0.01
+
+# Parameters for the dataset
+data:
+  Algorithm: ['pFedME'] # [Fedprox,Scaffold,Ditto,VAN,LOC,pFedME,PER]
+  dataset: 'Sentiment' # [Sentiment, EMNIST,CIFAR10]
+  distribution : "dirichlet" # "label swap","rotation"     ##########################
+  alpha : 0.4 # None
+
+  PER:
+    cluster_mode : "off" # "on", "off"  ##################  Relevant only for Algorithm : PER ######################
+    divisor : 10 # 10 ( should be > 1)
+    cluster_size : 4
+
+  Ditto:
+    mu : 0.1
+
+  Fedprox:
+    mu: 0.001
+    gamma : 0
+
+  pFedMe:
+    mu: 15
+    R : 20
+    K : 3
+    local_etax : 0.01
+    global_etax : 0.01
+
