@@ -127,9 +127,8 @@ class simulator:
             path = os.path.join(parent_dir, directory)
             distribution = self.params.get('data').get('distribution')
             alpha = self.params.get('data').get('alpha')
-            if alpha == None:
-                file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - run = {self.run}.npy"
-            else:
-                file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - distribution = {distribution} - alpha = {alpha} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - run = {self.run}.npy"
+
+            file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - run = {self.run}.npy"
+    
             path = os.path.join(path,file_name)
             np.save(path, log, allow_pickle=True)
