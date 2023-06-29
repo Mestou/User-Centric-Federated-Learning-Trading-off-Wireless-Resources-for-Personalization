@@ -1,5 +1,5 @@
 # User_centric_Federated_Learning: Trading off Wireless Resources for Personalization
-Tensorflow implementation of the algorithm "PER" implemented in the paper titled "["User-Centric Federated Learning: Trading off Wireless Resources for Personalization"](https://arxiv.org/abs/2304.12930) <br/>"
+Tensorflow implementation of the algorithm "PER" implemented in the paper titled ["User-Centric Federated Learning: Trading off Wireless Resources for Personalization"](https://arxiv.org/abs/2304.12930) <br/>
 
 
 
