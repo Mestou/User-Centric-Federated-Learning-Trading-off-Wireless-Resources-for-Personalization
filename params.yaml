@@ -9,7 +9,7 @@ simulation:
 
 # Parameters for the neural networks
 model :
-  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
+  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
   epochs: 1
   batch_size: 32
 
