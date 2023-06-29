@@ -26,7 +26,6 @@ data:
   PER:
     cluster_mode : "off" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
     divisor : 10 # 10 ( should be > 1) Defines the amount of data used by each device to calculate the variance to calculate the aggregation weights, equal to data_available/divisor
-    cluster_size : 4
 
   Ditto:
     mu : 0.1
