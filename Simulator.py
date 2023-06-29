@@ -125,8 +125,6 @@ class simulator:
             directory = "Results"
             parent_dir = Path(__file__).parent.resolve()
             path = os.path.join(parent_dir, directory)
-            distribution = self.params.get('data').get('distribution')
-            alpha = self.params.get('data').get('alpha')
 
             file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - run = {self.run}.npy"
     
