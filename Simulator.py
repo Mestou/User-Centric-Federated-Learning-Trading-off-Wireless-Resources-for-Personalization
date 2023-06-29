@@ -57,7 +57,7 @@ class simulator:
             '''Initialize the nodes to the same model params'''
             [node.initialize(dummy_node.get_model_params()) for node in node_list]
 
-            W = user_weighting(delta = [], nodes=self.nodes, fracs= [], samples_user=self.samples_user, var = [], collab="VAN",cluster_mode = "OFF",n_cluster = 4)  # Weighting matrix
+            W = user_weighting(delta = [], nodes=self.nodes, fracs= [], samples_user=self.samples_user, var = [], collab="VAN",cluster_mode = "OFF",n_cluster = None)  # Weighting matrix
 
             for it in range(0,self.iter):
 
