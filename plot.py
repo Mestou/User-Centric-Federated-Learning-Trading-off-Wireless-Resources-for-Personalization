@@ -5,7 +5,7 @@ import helper
 from scipy.signal import savgol_filter
 
 matplotlib.use('Qt5Agg')
-window_size=2
+window_size=3
 poly_order=2
 
 algorithm_names = ["PER","LOC","Scaffold","VAN","Ditto","Fedprox","pFedME"]
