@@ -18,7 +18,7 @@ markers = ['o', 's', '^', 'x', 'd', 'v', 'p']
 # Loop over the algorithm names and load the files
 for n, color, marker in zip(algorithm_names, colors, markers):
     # Load the data for the current algorithm
-    data = np.load(f'.\Results\Algorithm = {n} - dataset = Sentiment - distribution = dirichlet - alpha = 0.4 - clients = 35 - clustering = off (relevant for PER only) - run = 0.npy')
+    data = np.load(f'.\Results\Algorithm = {n} - dataset = Sentiment - clients = 35 - clustering = off (relevant for PER only) - run = 0.npy')
     data =  np.mean(np.mean(data, axis=0), axis=0)
     # Generate x-axis values based on the data length
     x = np.arange(len(data))
