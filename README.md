@@ -8,15 +8,16 @@ Packages can be found in `requirements.txt`.
 
 ## Training:
 
-The list of the available Algorithms [PER,Fedprox,Scaffold,Ditto,VAN,LOC,pFedME] with their parameters, and the available models [CNN,VGG,Sentiment] are included (commented) in the params.yml file.
+The list of the available Algorithms [PER,Fedprox,Scaffold,Ditto,VAN,LOC,pFedME] with their parameters, and the available models [CNN,VGG,Sentiment] are included (commented) in the `params.yaml` file.
 
-Set the desired algorithm, model, and dataset in the `params.yaml` file. Then, to train the model, simply run:
+We include code to run experiments on CIFAR-10 (CNN or VGG models) and Stack-Overflow Sentiment (Sentiment model) and EMNIST (CNN or VGG models) as in the paper. Choose the corresponding algorithm, dataset and arguments in the `params.yaml` file. Then, to train the model, simply run:
 
 ```
 python3 main.py
 ```
+
 ## Results
-Results are populated in the Results folder and can be plotted using the plot.py script.
+Results are populated in the Results folder.
 
 ## References
 If you find this work useful in your research, please consider citing one of our related papers:
