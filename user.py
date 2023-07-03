@@ -333,3 +333,13 @@ class FedUser(object):
         preds=np.argmax(self.my_model(self.test_data[0]),axis=1)
         return np.mean(np.argmax(self.test_data[1],axis=1)!= preds)
 
+    def validate(self,model):
+        """Test current model on local eval data
+        """
+        old=self.model.get_weights()
+        self.model.set_weights(model)
+        preds=self.model(self.test_data[0])
+        arr = np.asarray(self.test_data[1])
+        loss_value=self.loss_fn(arr, preds)
+        self.model.set_weights(old)
+        return loss_value

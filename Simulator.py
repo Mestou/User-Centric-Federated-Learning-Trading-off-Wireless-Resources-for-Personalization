@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('TkAgg',force=True)
 import util
-from functions import user_weighting, Ditto_training, Fedprox_training, pFedMe_Training, Scaffold_training, FedPer_training, FedAvg_training, Local_training
+from functions import user_weighting, Ditto_training, Fedprox_training, pFedMe_Training, Scaffold_training, FedPer_training, FedAvg_training, Local_training, Fomo_training
+
 from user import FedUser
 import tensorflow as tf
 from pathlib import Path
@@ -47,6 +48,9 @@ class simulator:
             print("Training_Algorithm = ", Training_Modes)
             log = []
             self.global_c = []
+            loc_val_old = []
+            P = np.ones([self.nodes,self.nodes])
+            msg_old = []
             accuracy=[]
             '''Create Nodes'''
             node_list = [FedUser(i, self.fracs[i, :], self.shape, np.max(self.num_classes),
@@ -102,6 +106,11 @@ class simulator:
                        _ = FedPer_training( W=W, it=it, node_list=node_list, init=dummy_node.get_model_params(), divisor=divisor, fracs=self.fracs,
                                     samples_user=self.samples_user, cluster_mode=cluster_mode, n_cluster=None)
 
+                elif (Training_Modes == "FedFomo"):
+                    M = self.params.get("data").get("FedFomo").get("M")
+                    epsilon = self.params.get("data").get("FedFomo").get("epsilon")
+
+                    loc_val_old,msg_old,P = Fomo_training(M, epsilon, P, self.samples_user, self.nodes, node_list, msg_old, loc_val_old, it)
                 elif (Training_Modes == 'LOC'):
                     Local_training(it=it, node_list=node_list)
                     

@@ -1,4 +1,7 @@
 from __future__ import absolute_import, division, print_function
+
+import random
+
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
 import matplotlib.cm as cm
@@ -33,6 +36,7 @@ def compute_weights(embeddings_value, msg, nodes):
         embeddings_value = evaluate_gradient(embeddings_value[i],embeddings_value,lambdas=10,eta=0.01,j=i)
 
     return embeddings_value
+
 
 
 def user_weighting(delta,nodes,fracs,samples_user,var,collab = 'VAN',cluster_mode = 'OFF',n_cluster = 4):
@@ -80,6 +84,32 @@ def user_weighting(delta,nodes,fracs,samples_user,var,collab = 'VAN',cluster_mod
         
     return W
 
+
+
+
+def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes):
+
+
+    W_ = np.diag(np.ones(nodes))
+
+    rand_v = np.random.uniform(0, 1, (nodes, nodes))
+    W_[np.where(rand_v < epsilon)] = 1
+    top_M = np.argpartition(P, -M, axis=1)[:, -M:]
+    W_[top_M] = 1
+
+    W=np.zeros((nodes,nodes))
+    for i in range(0,nodes):
+        for j in np.where(W_[i,:] == 1)[0]:
+            W[i,j] = (val_old[i,i]-val[i,j])/(sum([np.linalg.norm(x-y) for x,y in zip(delta_old[i],delta[j])]))
+
+    P=P+W
+    P=P/P.sum(axis=1)
+    row_sums = W_.sum(axis=1)
+    W_ = W_ / row_sums[:, np.newaxis]
+    return W_,P
+
+
+
 def Ditto_training(mu = 0.5, node_list = [], it = 0, samples_user = []):
 
     avg_loss = []
@@ -98,6 +128,31 @@ def Ditto_training(mu = 0.5, node_list = [], it = 0, samples_user = []):
         avg_w = [np.average(weights[w_ind], axis=0, weights=W[0, :]) for w_ind in
                  range(0, len(weights))]  # Averaging local weights
         node.set_model_params(avg_w)  # Setting the local params
+
+
+def Fomo_training(M, epsilon, P,samples_user,nodes,node_list,msg_old,loc_val_old,it):
+
+    W = np.repeat(np.expand_dims(samples_user, axis=0), nodes, axis=0)
+    msg = [node_list[i].local_train() for i in range(0, nodes)]  # Local
+    weights = ([[w[w_ind] for w in msg] for w_ind in range(0, len(msg[0]))])
+    loc_val = []
+
+    for node in node_list:
+        loc_val.append(np.asarray([node.validate(w[0]) for w in msg]))
+    loc_val = np.asarray(loc_val)
+    node_ind = 0
+    msg = [[np.hstack(np.reshape(x, (-1, 1))) for x in m] for m in msg]
+    msg = [np.concatenate(d, axis=0) for d in msg]
+    if (it > 0):
+        W, P = fomo_weights(msg, msg_old, loc_val, loc_val_old, M, epsilon, P,nodes)
+    msg_old = msg.copy()
+    loc_val_old = loc_val.copy()
+    for node in node_list:
+        avg_w = [np.average(weights[w_ind], axis=0, weights=W[node_ind, :]) for w_ind in
+                 range(0, len(weights))]  # Averaging local weights
+        node.set_model_params(avg_w[0])  # Setting the local params
+        node_ind = node_ind + 1
+    return loc_val_old, msg_old, P
 
 
 def Fedprox_training(mu=0.5,gamma = 0, node_list=[], it=0, samples_user=[]):
@@ -193,7 +248,7 @@ def Local_training( it=-1, node_list=[]):
 
     nodes = len(node_list)
 
-    W = user_weighting(delta = 0, nodes = nodes, fracs = 0, samples_user = [], var = [], collab ="LOC", cluster_mode=False,
+    W = user_weighting(delta = 0, nodes = nodes, fracs = 0, samples_user = [], var = [], collab ="LOC", cluster_mode="off",
                            n_cluster = 0)  # Weighting matrix
 
     msg = [node_list[i].local_train() for i in range(0, nodes)]  # Local updates
