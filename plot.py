@@ -8,12 +8,12 @@ matplotlib.use('Qt5Agg')
 window_size=3
 poly_order=2
 
-algorithm_names = ["PER","LOC","Scaffold","VAN","Ditto","Fedprox","pFedME"]
+algorithm_names = ["PER","LOC","Scaffold","VAN","Ditto","Fedprox","pFedME","FedFomo"]
 
 plt.figure(figsize=(10, 6))
 
-colors = ['blue', 'green', 'red', 'orange', 'purple', 'brown', 'gray']
-markers = ['o', 's', '^', 'x', 'd', 'v', 'p']
+colors = ['blue', 'green', 'red', 'orange', 'purple', 'brown', 'gray','yellow']
+markers = ['o', 's', '^', 'x', 'd', 'v', 'p','s']
 
 # Loop over the algorithm names and load the files
 for n, color, marker in zip(algorithm_names, colors, markers):
@@ -32,7 +32,7 @@ plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.xticks(np.arange(0, len(data), step=10))
-plt.yticks(np.arange(0, np.max(data), step=10))
+plt.yticks(np.arange(0, 1, step=0.1))
 plt.legend(loc='upper left')
 
 # Save the figure as an image (optional)

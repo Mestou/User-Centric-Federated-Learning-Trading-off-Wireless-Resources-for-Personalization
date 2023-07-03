@@ -113,7 +113,7 @@ def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes,rate_limited):
         W=np.zeros((nodes,nodes))
         for i in range(0,nodes):
             for j in range(0,nodes):
-                W[i,j] = (val_old[i,i]-val[i,j])/(np.linalg.norm(delta_old[i]-delta[j]))
+                W[i,j] = (val_old[i,i]-val[i,j])/(sum([np.linalg.norm(x-y) for x,y in zip(delta_old[i],delta[j])]))
         P=P+W
         P=P/P.sum(axis=1)
         W[W<0]=0
@@ -123,9 +123,6 @@ def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes,rate_limited):
                 W[i,i]=1
         row_sums = W.sum(axis=1)
         W = W / row_sums[:, np.newaxis]
-        # plt.imshow(W)
-        #plt.show()
-        # plt.clf()
 
         return W,P
 

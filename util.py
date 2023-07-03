@@ -65,7 +65,7 @@ def loadEMNIST(nodes):
     n_classes = np.max(y_train)+1
     idcs = np.random.permutation(x_train.shape[0])
     print(idcs)
-    train_idcs= idcs[:100000]
+    train_idcs= idcs[:20000]
     alpha=0.4                        ######## sets the dirichlet parameter VALUE ######
     label_distribution = np.random.dirichlet([alpha]*nodes, n_classes)
     class_idcs = [np.argwhere(y_train[train_idcs]==y).flatten()
