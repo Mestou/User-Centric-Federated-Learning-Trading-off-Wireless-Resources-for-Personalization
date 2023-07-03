@@ -95,7 +95,7 @@ def loadEMNIST(nodes):
             fracs[i, j] = samples_user[j] / samples_user[i]
 
 
-                                        #### uncomment for rotated images experiment ####
+                                        #### uncomment for applying rotation transformation on images (20 users, 4 groups) ####
     # for i in range(0, 5):
     #     train_X[i] = np.asarray(tf.image.rot90(train_X[i]))
     #     test_X[i] = np.asarray(tf.image.rot90(test_X[i]))

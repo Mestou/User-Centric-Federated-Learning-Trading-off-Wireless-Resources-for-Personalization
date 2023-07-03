@@ -109,8 +109,8 @@ class simulator:
                 elif (Training_Modes == "FedFomo"):
                     M = self.params.get("data").get("FedFomo").get("M")
                     epsilon = self.params.get("data").get("FedFomo").get("epsilon")
-
-                    loc_val_old,msg_old,P = Fomo_training(M, epsilon, P, self.samples_user, self.nodes, node_list, msg_old, loc_val_old, it)
+                    rate_limited = self.params.get("data").get("FedFomo").get("rate_limited")
+                    loc_val_old,msg_old,P = Fomo_training(M, epsilon, P, self.samples_user, self.nodes, node_list, msg_old, loc_val_old, it,rate_limited)
                 elif (Training_Modes == 'LOC'):
                     Local_training(it=it, node_list=node_list)
                     

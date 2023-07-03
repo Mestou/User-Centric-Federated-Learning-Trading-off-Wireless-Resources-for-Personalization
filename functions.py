@@ -87,26 +87,48 @@ def user_weighting(delta,nodes,fracs,samples_user,var,collab = 'VAN',cluster_mod
 
 
 
-def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes):
+def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes,rate_limited):
 
+    if rate_limited == True:
+        W_ = np.diag(np.ones(nodes))
 
-    W_ = np.diag(np.ones(nodes))
+        rand_v = np.random.uniform(0, 1, (nodes, nodes))
+        W_[np.where(rand_v < epsilon)] = 1
+        top_M = np.argpartition(P, -M, axis=1)[:, -M:]
+        W_[top_M] = 1
 
-    rand_v = np.random.uniform(0, 1, (nodes, nodes))
-    W_[np.where(rand_v < epsilon)] = 1
-    top_M = np.argpartition(P, -M, axis=1)[:, -M:]
-    W_[top_M] = 1
+        W=np.zeros((nodes,nodes))
+        for i in range(0,nodes):
+            for j in np.where(W_[i,:] == 1)[0]:
+                W[i,j] = (val_old[i,i]-val[i,j])/(sum([np.linalg.norm(x-y) for x,y in zip(delta_old[i],delta[j])]))
 
-    W=np.zeros((nodes,nodes))
-    for i in range(0,nodes):
-        for j in np.where(W_[i,:] == 1)[0]:
-            W[i,j] = (val_old[i,i]-val[i,j])/(sum([np.linalg.norm(x-y) for x,y in zip(delta_old[i],delta[j])]))
+        P=P+W
+        P=P/P.sum(axis=1)
+        row_sums = W_.sum(axis=1)
+        W_ = W_ / row_sums[:, np.newaxis]
 
-    P=P+W
-    P=P/P.sum(axis=1)
-    row_sums = W_.sum(axis=1)
-    W_ = W_ / row_sums[:, np.newaxis]
-    return W_,P
+        return W_, P
+
+    else :
+        W=np.zeros((nodes,nodes))
+        for i in range(0,nodes):
+            for j in range(0,nodes):
+                W[i,j] = (val_old[i,i]-val[i,j])/(np.linalg.norm(delta_old[i]-delta[j]))
+        P=P+W
+        P=P/P.sum(axis=1)
+        W[W<0]=0
+        row_sums = W.sum(axis=1)
+        for i in range(len(row_sums)):
+            if row_sums[i]==0:
+                W[i,i]=1
+        row_sums = W.sum(axis=1)
+        W = W / row_sums[:, np.newaxis]
+        # plt.imshow(W)
+        #plt.show()
+        # plt.clf()
+
+        return W,P
+
 
 
 
@@ -130,7 +152,7 @@ def Ditto_training(mu = 0.5, node_list = [], it = 0, samples_user = []):
         node.set_model_params(avg_w)  # Setting the local params
 
 
-def Fomo_training(M, epsilon, P,samples_user,nodes,node_list,msg_old,loc_val_old,it):
+def Fomo_training(M, epsilon, P,samples_user,nodes,node_list,msg_old,loc_val_old,it,rate_limited):
 
     W = np.repeat(np.expand_dims(samples_user, axis=0), nodes, axis=0)
     msg = [node_list[i].local_train() for i in range(0, nodes)]  # Local
@@ -144,7 +166,7 @@ def Fomo_training(M, epsilon, P,samples_user,nodes,node_list,msg_old,loc_val_old
     msg = [[np.hstack(np.reshape(x, (-1, 1))) for x in m] for m in msg]
     msg = [np.concatenate(d, axis=0) for d in msg]
     if (it > 0):
-        W, P = fomo_weights(msg, msg_old, loc_val, loc_val_old, M, epsilon, P,nodes)
+        W, P = fomo_weights(msg, msg_old, loc_val, loc_val_old, M, epsilon, P,nodes,rate_limited)
     msg_old = msg.copy()
     loc_val_old = loc_val.copy()
     for node in node_list:

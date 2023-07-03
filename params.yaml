@@ -4,13 +4,13 @@ path:
 
 simulation:
   tot_sims: 1      # n' of simulations
-  n_clients: 20    #number of clients
+  n_clients: 35   #number of clients
   n_rounds: 250     # 
 
 # Parameters for the neural networks
 model :
   id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
-  epochs: 3
+  epochs: 1
   batch_size: 32
 
   optimizer:
@@ -43,3 +43,4 @@ data:
   FedFomo:
     M : 5
     epsilon : 0.3
+    rate_limited : False
