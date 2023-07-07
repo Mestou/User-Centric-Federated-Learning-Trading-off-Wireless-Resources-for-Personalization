@@ -4,7 +4,7 @@ path:
 
 simulation:
   tot_sims: 1      # n' of simulations
-  n_clients: 100   #number of clients
+  n_clients: 20   #number of clients
   n_rounds: 150     #
 
 # Parameters for the neural networks
@@ -20,7 +20,7 @@ model :
 # Parameters for the dataset and Algorithms
 data:
   Algorithm: ['FedFomo'] # ['Fedprox','Scaffold','Ditto','VAN','LOC','pFedME','PER','FedFomo'] (VAN = Vanilla Federated Averaging, LOC = Local training, PER = our algorithm)
-  dataset: 'EMNIST' # [Sentiment, EMNIST,CIFAR10]
+  dataset: 'CIFAR10' # [Sentiment, EMNIST,CIFAR10]
 
   PER:
     cluster_mode : "on" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
