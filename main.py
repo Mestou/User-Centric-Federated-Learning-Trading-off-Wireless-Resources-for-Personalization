@@ -1,8 +1,8 @@
 from read_data import read_params, get_data_loaders
 import tensorflow as tf
-from Simulator import simulator
 from pathlib import Path
 import os
+from Simulator import simulator_
 
 print(tf.__version__)
 
@@ -24,13 +24,13 @@ if __name__ == "__main__":
     dataset = params.get('data').get('dataset')
     n_runs = params.get('simulation').get('tot_sims')
 
-    for run in range(n_runs):
+    for run in range(0,n_runs):
 
         client_train_loaders, server_test_loader, shape, num_classes, fracs, samples_users = get_data_loaders(
             dataset=dataset,
             nodes=n_nodes)
 
-        simulator = simulator(params,
+        simulator = simulator_(params=params,
                               train_data=client_train_loaders,
                               test_data=server_test_loader,
                               shape=shape,

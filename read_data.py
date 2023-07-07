@@ -3,7 +3,7 @@
 """
 
 import yaml
-from util import *
+from util import loadCIFAR10,loadSentiment,loadEMNIST
 
 def read_params(filepath):
     """

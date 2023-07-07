@@ -3,11 +3,9 @@ from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 import numpy as np
 import torch
-import os
-from tensorflow.keras.datasets import mnist,fashion_mnist,cifar10
+from keras.datasets import mnist,cifar10
 from extra_keras_datasets import emnist
 import re
-import shutil
 import string
 import tensorflow_datasets as tfds
 
@@ -58,15 +56,14 @@ def loadEMNIST(nodes):
     num_classes = 62
     x_shape=x_train.shape[1:]
 
-    train_frac = 0.5
+    train_frac = 0.8
 
     samples_user=[]
     train_X, train_Y, test_X, test_Y = [], [], [], []
     n_classes = np.max(y_train)+1
     idcs = np.random.permutation(x_train.shape[0])
-    print(idcs)
-    train_idcs= idcs[:20000]
-    alpha=0.4                        ######## sets the dirichlet parameter VALUE ######
+    train_idcs= idcs[:125000]
+    alpha= 8                       ######## sets the dirichlet parameter VALUE ######
     label_distribution = np.random.dirichlet([alpha]*nodes, n_classes)
     class_idcs = [np.argwhere(y_train[train_idcs]==y).flatten()
            for y in range(n_classes)]
@@ -96,21 +93,21 @@ def loadEMNIST(nodes):
 
 
                                         #### uncomment for applying rotation transformation on images (20 users, 4 groups) ####
-    # for i in range(0, 5):
-    #     train_X[i] = np.asarray(tf.image.rot90(train_X[i]))
-    #     test_X[i] = np.asarray(tf.image.rot90(test_X[i]))
-    #
-    # for i in range(5, 10):
-    #     train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(train_X[i])))
-    #     test_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(test_X[i])))
-    #
-    # for i in range(10, 15):
-    #     train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(train_X[i]))))
-    #     test_X[i]= np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(test_X[i]))))
-    #
-    # for i in range(15, 20):
-    #     train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(tf.image.rot90(train_X[i])))))
-    #     test_X[i]= np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(tf.image.rot90(test_X[i])))))
+    for i in range(0, 25):
+        train_X[i] = np.asarray(tf.image.rot90(train_X[i]))
+        test_X[i] = np.asarray(tf.image.rot90(test_X[i]))
+
+    for i in range(25, 50):
+        train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(train_X[i])))
+        test_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(test_X[i])))
+
+    for i in range(50, 75):
+        train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(train_X[i]))))
+        test_X[i]= np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(test_X[i]))))
+
+    for i in range(75, 100):
+        train_X[i] = np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(tf.image.rot90(train_X[i])))))
+        test_X[i]= np.asarray(tf.image.rot90(tf.image.rot90(tf.image.rot90(tf.image.rot90(test_X[i])))))
 
 
                                             #### uncomment for label swap experiment ####

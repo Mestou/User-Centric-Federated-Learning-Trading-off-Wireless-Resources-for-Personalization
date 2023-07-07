@@ -1,13 +1,9 @@
-import tensorflow.keras.initializers
-from tensorflow.keras.layers import  Dense,Input,Reshape,Conv2D,Flatten,MaxPooling2D,AveragePooling2D,Embedding,Dropout,GlobalAveragePooling1D,GlobalMaxPooling1D
-from tensorflow.keras.models import Model
+import keras.initializers
 import keras
-import importlib
-import math
+from keras.layers import Dense,Input,Conv2D,Flatten,MaxPooling2D,AveragePooling2D
+from keras.models import Model
 import tensorflow as tf
-from tensorflow.keras import layers
-
-
+from keras import layers
 
 def Sentiment():
     max_features = 10000
@@ -20,7 +16,7 @@ def Sentiment():
         layers.Dense(4,activation = tf.keras.activations.softmax)])
     return model
 def Sentiment_zero():
-    initializer = tensorflow.keras.initializers.Zeros()
+    initializer = keras.initializers.Zeros()
     max_features = 10000
     embedding_dim = 16
     model = tf.keras.Sequential([
@@ -46,7 +42,7 @@ def CNN(shape,num_classes):
     return architecture
 
 def CNN_zero(shape,num_classes):
-    initializer = tensorflow.keras.initializers.Zeros()
+    initializer = keras.initializers.Zeros()
     input=Input(shape=shape)
     CNN1= Conv2D(6, (5, 5), activation='relu', kernel_initializer=  initializer)(input)
     AVG1=AveragePooling2D()(CNN1)
@@ -80,7 +76,7 @@ def CNN_VGG(shape,num_classes):
 
 
 def CNN_VGG_zero(shape,num_classes):
-    initializer = tensorflow.keras.initializers.Zeros()
+    initializer = keras.initializers.Zeros()
     input=Input(shape=shape)
     CNN1= Conv2D(32, (3, 3), activation='relu', kernel_initializer=  initializer, padding='same')(input)
     CNN2=Conv2D(32, (3, 3), activation='relu',  kernel_initializer=  initializer, padding='same')(CNN1)

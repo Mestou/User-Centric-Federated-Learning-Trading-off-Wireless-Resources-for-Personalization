@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib
 matplotlib.use('TkAgg',force=True)
-import util
 from functions import user_weighting, Ditto_training, Fedprox_training, pFedMe_Training, Scaffold_training, FedPer_training, FedAvg_training, Local_training, Fomo_training
-
 from user import FedUser
 import tensorflow as tf
 from pathlib import Path
@@ -13,7 +11,7 @@ import os
 seed =225
 np.random.seed(seed)
 tf.random.set_seed(seed)
-class simulator:
+class simulator_:
     def __init__(self, params, train_data, test_data, shape, samples_user, fracs, num_classes,run):
         self.run = run
         self.params = params
@@ -136,6 +134,8 @@ class simulator:
             path = os.path.join(parent_dir, directory)
 
             file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - run = {self.run}.npy"
-    
+            if Training_Modes == "FedFomo":
+                file_name = F"Algorithm = {Training_Modes} - dataset = {self.dataset} - clients = {self.nodes} - clustering = {self.cluster_mode} (relevant for PER only) - rate_limited = {rate_limited} - M = {M} - run = {self.run}.npy"
+
             path = os.path.join(path,file_name)
             np.save(path, log, allow_pickle=True)

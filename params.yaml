@@ -4,23 +4,23 @@ path:
 
 simulation:
   tot_sims: 1      # n' of simulations
-  n_clients: 20   #number of clients
-  n_rounds: 250     # 
+  n_clients: 100   #number of clients
+  n_rounds: 150     #
 
 # Parameters for the neural networks
 model :
-  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
-  epochs: 1
-  batch_size: 32
+  id: "CNN" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
+  epochs: 2
+  batch_size: 250
 
   optimizer:
     type: 'SGD' # 'Adam','SGD'
-    local_lr: 0.01 # Learning rate
+    local_lr: 0.1 # Learning rate
 
 # Parameters for the dataset and Algorithms
 data:
-  Algorithm: ['PER'] # ['Fedprox','Scaffold','Ditto','VAN','LOC','pFedME','PER','FedFomo'] (VAN = Vanilla Federated Averaging, LOC = Local training, PER = our algorithm)
-  dataset: 'Sentiment' # [Sentiment, EMNIST,CIFAR10]
+  Algorithm: ['FedFomo'] # ['Fedprox','Scaffold','Ditto','VAN','LOC','pFedME','PER','FedFomo'] (VAN = Vanilla Federated Averaging, LOC = Local training, PER = our algorithm)
+  dataset: 'EMNIST' # [Sentiment, EMNIST,CIFAR10]
 
   PER:
     cluster_mode : "on" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
@@ -41,6 +41,6 @@ data:
     global_etax : 0.01
 
   FedFomo:
-    M : 5
-    epsilon : 0
-    rate_limited : False
+    M : 25
+    epsilon : 0.05
+    rate_limited : True

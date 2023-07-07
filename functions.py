@@ -1,14 +1,8 @@
 from __future__ import absolute_import, division, print_function
-
-import random
-
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
-import matplotlib.cm as cm
 import numdifftools as nd
 import numpy as np
-import matplotlib.pyplot as plt
-
 
 def evaluate_gradient(w1, w2, lambdas, eta, j):
     loss_ = []
@@ -87,27 +81,56 @@ def user_weighting(delta,nodes,fracs,samples_user,var,collab = 'VAN',cluster_mod
 
 
 
-def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes,rate_limited):
+def fomo_weights(delta,delta_old,val,val_old,M,epsilon,P,nodes,rate_limited,it):
 
     if rate_limited == True:
-        W_ = np.diag(np.ones(nodes))
 
-        rand_v = np.random.uniform(0, 1, (nodes, nodes))
-        W_[np.where(rand_v < epsilon)] = 1
-        top_M = np.argpartition(P, -M, axis=1)[:, -M:]
-        W_[top_M] = 1
+        if it == 1:
+            W_ = np.random.binomial(1,M/nodes,size=(nodes,nodes))
+
+        else:
+            W_ = np.diag(np.ones(nodes))
+
+            rand_v = np.random.uniform(0, 1, (nodes, nodes))
+            for i in range(0,nodes):
+                W_[i,np.where(rand_v[i] < epsilon)] = 1
+
+        if it > 1:
+
+            top_M = np.argpartition(P, -M, axis=1)[:, -M:]
+
+            for i,L in enumerate(top_M):
+                for s in L:
+                    W_[i,s] = 1
 
         W=np.zeros((nodes,nodes))
         for i in range(0,nodes):
             for j in np.where(W_[i,:] == 1)[0]:
                 W[i,j] = (val_old[i,i]-val[i,j])/(sum([np.linalg.norm(x-y) for x,y in zip(delta_old[i],delta[j])]))
 
+
         P=P+W
         P=P/P.sum(axis=1)
-        row_sums = W_.sum(axis=1)
-        W_ = W_ / row_sums[:, np.newaxis]
 
-        return W_, P
+        P_ = [np.multiply(W_[i],P[i]) for i in range(0,nodes)]
+
+        W_ = np.diag(np.ones(nodes))
+
+        top_M = np.argpartition(P_, -M, axis=1)[:, -M:]
+
+        for i,L in enumerate(top_M):
+            for s in L:
+                W_[i,s] = 1
+
+        W = np.array([np.multiply(W_[i],W[i]) for i in range(0,nodes)])
+        for i in range(0,nodes):
+            W[i][np.where(W[i]<0)] = 0
+            if sum(W[i]) == 0:
+                W[i][i] = 1
+        row_sums = W.sum(axis=1)
+        W = W / row_sums[:, np.newaxis]
+
+        return W, P
 
     else :
         W=np.zeros((nodes,nodes))
@@ -163,7 +186,7 @@ def Fomo_training(M, epsilon, P,samples_user,nodes,node_list,msg_old,loc_val_old
     msg = [[np.hstack(np.reshape(x, (-1, 1))) for x in m] for m in msg]
     msg = [np.concatenate(d, axis=0) for d in msg]
     if (it > 0):
-        W, P = fomo_weights(msg, msg_old, loc_val, loc_val_old, M, epsilon, P,nodes,rate_limited)
+        W, P = fomo_weights(msg, msg_old, loc_val, loc_val_old, M, epsilon, P,nodes,rate_limited,it)
     msg_old = msg.copy()
     loc_val_old = loc_val.copy()
     for node in node_list:
