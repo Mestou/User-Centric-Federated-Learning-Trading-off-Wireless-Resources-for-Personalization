@@ -116,7 +116,7 @@ class simulator_:
                     FedAvg_training( it= it  , node_list=node_list, samples_user = self.samples_user)
 
                 for node in node_list:
-                    if (Training_Modes == 'Ditto' or Training_Modes == 'pFedMe' or Training_Modes == 'Fedprox'):
+                    if (Training_Modes == 'Ditto' or Training_Modes == 'Fedprox'):
                         accuracy.append(1 - node.local_test_my())
                     else:
                         accuracy.append(1 - node.local_test())

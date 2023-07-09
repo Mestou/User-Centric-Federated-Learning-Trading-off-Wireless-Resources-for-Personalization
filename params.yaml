@@ -4,43 +4,43 @@ path:
 
 simulation:
   tot_sims: 1      # n' of simulations
-  n_clients: 20   #number of clients
-  n_rounds: 150     #
+  n_clients: 35  #number of clients
+  n_rounds: 300     #
 
 # Parameters for the neural networks
 model :
-  id: "CNN" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
-  epochs: 2
-  batch_size: 250
+  id: "Sentiment" #[CNN,VGG,Sentiment] use Sentiment -- > for Stack-Overflow Sentiment dataset , Use CNN,VGG ---> for EMNSIT or CIFAR10 datasets
+  epochs: 1
+  batch_size: 32
 
   optimizer:
     type: 'SGD' # 'Adam','SGD'
-    local_lr: 0.1 # Learning rate
+    local_lr: 0.01 # Learning rate
 
 # Parameters for the dataset and Algorithms
 data:
-  Algorithm: ['FedFomo'] # ['Fedprox','Scaffold','Ditto','VAN','LOC','pFedME','PER','FedFomo'] (VAN = Vanilla Federated Averaging, LOC = Local training, PER = our algorithm)
-  dataset: 'CIFAR10' # [Sentiment, EMNIST,CIFAR10]
+  Algorithm: ['PER'] # ['Fedprox','Scaffold','Ditto','VAN','LOC','pFedME','PER','FedFomo'] (VAN = Vanilla Federated Averaging, LOC = Local training, PER = our algorithm)
+  dataset: 'Sentiment' # [Sentiment, EMNIST,CIFAR10]
 
   PER:
-    cluster_mode : "on" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
-    divisor : 10 # [1.5,2,10] ( should be > 1) aids in defining the amount of data used by each device to calculate the variance, to calculate the aggregation weights. amount of data = local_data/divisor
+    cluster_mode : "off" # ["on", "off"]  ##################  Relevant only for Algorithm : PER ######################
+    divisor : 11 # [1.5,2,10] ( should be > 1) aids in defining the amount of data used by each device to calculate the variance, to calculate the aggregation weights. amount of data = local_data/divisor
 
   Ditto:
     mu : 0.1
 
   Fedprox:
-    mu: 0.001
+    mu: 0.00001
     gamma : 0
 
   pFedMe:
     mu: 15
-    R : 20
-    K : 3
-    local_etax : 0.01
+    R : 30
+    K : 7
+    local_etax : 0.1
     global_etax : 0.01
 
   FedFomo:
-    M : 25
-    epsilon : 0.05
-    rate_limited : True
+    M : 2
+    epsilon : 0.1
+    rate_limited : False

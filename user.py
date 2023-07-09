@@ -283,7 +283,6 @@ class FedUser(object):
 
         for epochs in range(0, self.epochs):         #epochs are equivelant to R, local iterations are K, refer to ""https://arxiv.org/pdf/2006.08848.pdf"" Algorithm 1
             used= []
-            self.optimizer.learning_rate.assign(local_etax)
             for K in range(0,self.local_iterations):
 
                 choices = list(set(range(0, self.train_data[0].shape[0])).difference(used))
@@ -302,11 +301,11 @@ class FedUser(object):
 
                     theta_grad = tape.gradient(loss_value, self.my_model.trainable_variables)  # Update Variables
 
-                self.optimizer.learning_rate.assign(self.etax)
+                self.optimizer.learning_rate.assign(local_etax)
                 self.optimizer.apply_gradients(zip(theta_grad, self.my_model.trainable_variables))
             self.optimizer.learning_rate.assign(global_etax)
             self.optimizer.apply_gradients(zip([mu*(a-b) for a,b in list(zip(self.model.trainable_variables,self.my_model.trainable_variables))], self.model.trainable_variables))
-
+            self.optimizer.learning_rate.assign(self.etax)
         return self.model.get_weights()
 
 

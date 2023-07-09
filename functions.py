@@ -214,7 +214,6 @@ def Fedprox_training(mu=0.5,gamma = 0, node_list=[], it=0, samples_user=[]):
 
 def pFedMe_Training( mu = 15, R = 20, K = 3,local_etax = 0.01,global_etax = 0.01,node_list= [],samples_user = []):
 
-
     nodes = len(node_list)
 
     for node in node_list:

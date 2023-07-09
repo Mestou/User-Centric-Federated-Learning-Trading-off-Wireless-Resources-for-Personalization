@@ -256,7 +256,6 @@ def loadSentiment(nodes):
     train_X, train_Y, test_X, test_Y = [], [], [], []
     n_classes = np.max(y_train).astype('int') + 1
     idcs = np.random.permutation(x_train.shape[0])
-    print(idcs)
     train_idcs = idcs[:16000]
 
     alpha = 0.4  ######## sets the dirichlet parameter VALUE ######
