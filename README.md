@@ -23,31 +23,22 @@ Results are populated in the Results folder.
 If you find this work useful in your research, please consider citing one of our related papers:
 ```
 
-@misc{mestoukirdi2023usercentric,
-      title={User-Centric Federated Learning: Trading off Wireless Resources for Personalization}, 
-      author={Mohamad Mestoukirdi and Matteo Zecchin and David Gesbert and Qianrui Li},
-      year={2023},
-      eprint={2304.12930},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
-}
+@INPROCEEDINGS{9682003,
+  author={Mestoukirdi, Mohamad and Zecchin, Matteo and Gesbert, David and Li, Qianrui and Gresset, Nicolas},
+  booktitle={2021 IEEE Globecom Workshops (GC Wkshps)}, 
+  title={User-Centric Federated Learning}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={1-6},
+  doi={10.1109/GCWkshps52748.2021.9682003}}
 
-
-@article{DBLP:journals/corr/abs-2110-09869,
-  author       = {Mohamad Mestoukirdi and
-                  Matteo Zecchin and
-                  David Gesbert and
-                  Qianrui Li and
-                  Nicolas Gresset},
-  title        = {User-Centric Federated Learning},
-  journal      = {CoRR},
-  volume       = {abs/2110.09869},
-  year         = {2021},
-  url          = {https://arxiv.org/abs/2110.09869},
-  eprinttype    = {arXiv},
-  eprint       = {2110.09869},
-  timestamp    = {Mon, 25 Oct 2021 20:07:12 +0200},
-  biburl       = {https://dblp.org/rec/journals/corr/abs-2110-09869.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
-}
-```
+@ARTICLE{10286560,
+  author={Mestoukirdi, Mohamad and Zecchin, Matteo and Gesbert, David and Li, Qianrui},
+  journal={IEEE Transactions on Machine Learning in Communications and Networking}, 
+  title={User-Centric Federated Learning: Trading off Wireless Resources for Personalization}, 
+  year={2023},
+  volume={1},
+  number={},
+  pages={346-359},
+  doi={10.1109/TMLCN.2023.3325297}}
